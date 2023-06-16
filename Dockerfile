@@ -13,9 +13,8 @@ COPY . .
 # move the static production React UI into the build subdirectory
 COPY ui/build/ build/
 
-EXPOSE 5000
+EXPOSE 3000
 
-ENTRYPOINT [ "flask"]
 
-CMD [ "run", "--host", "0.0.0.0" ]
+CMD ["gunicorn", "-b", ":3000", "app:app"]
 
