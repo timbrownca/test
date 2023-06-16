@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, request, send_from_directory
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS #comment this on deployment
@@ -20,6 +21,21 @@ def manifest():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.template_folder, 'favicon.ico')
+
+
+@app.route('/chat_history', methods=['POST'])
+def get_chat_history():
+    # if "user" not in session:
+    #     return redirect(url_for('login'))
+    
+    # user = session["user"]
+    # get all chat sessions for the user, sorted by date, grouped by today, this week, this month, older
+    chat_history = [
+        {"session_id": 12345, "config": {}, "history":[], "label": "chat session 1"},
+        {"session_id": 23456, "config": {}, "history":[], "label": "chat session 2"}
+        ]
+    print(f"Fetched the following chat history:\n{json.dumps(chat_history)}")
+    return { "status": "success", "history": chat_history }
 
 
 # Run the Flask app
